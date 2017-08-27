@@ -3,16 +3,22 @@ import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
+import { Http } from '@angular/http';
+
 
 @Injectable()
 export class UserData {
+
   _favorites: string[] = [];
   HAS_LOGGED_IN = 'hasLoggedIn';
   HAS_SEEN_TUTORIAL = 'hasSeenTutorial';
 
+  status: any;
+
   constructor(
     public events: Events,
-    public storage: Storage
+    public storage: Storage,
+    public http: Http
   ) {}
 
   hasFavorite(sessionName: string): boolean {
@@ -31,9 +37,26 @@ export class UserData {
   };
 
   login(username: string): void {
-    this.storage.set(this.HAS_LOGGED_IN, true);
-    this.setUsername(username);
-    this.events.publish('user:login');
+
+    var url = 'http://localhost/api.cioconvex/api.php';
+    var param = JSON.stringify({
+      action: 'login',
+      email: username
+    });
+
+    this.http.post(url, param).subscribe(data => {
+      console.log(data.json());
+    }, error => {
+      console.log('Opps : '+error);
+      
+    });
+    console.log('++++++');
+    
+
+    // this.storage.set(this.HAS_LOGGED_IN, true);
+    // this.setUsername(username);
+    // this.events.publish('user:login');
+
   };
 
   signup(username: string): void {

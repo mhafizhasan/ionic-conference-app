@@ -19,7 +19,7 @@ export class ConferenceData {
     if (this.data) {
       return Observable.of(this.data);
     } else {
-      return this.http.get('assets/data/data.json')
+      return this.http.get('http://localhost/api.cioconvex/api.php?action=schedules')
         .map(this.processData, this);
     }
   }
@@ -33,6 +33,8 @@ export class ConferenceData {
 
     // loop through each day in the schedule
     this.data.schedule.forEach((day: any) => {
+      // console.log(day.date);
+      
       // loop through each timeline group in the day
       day.groups.forEach((group: any) => {
         // loop through each session in the timeline group

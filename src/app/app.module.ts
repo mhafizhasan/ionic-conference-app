@@ -7,6 +7,8 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+
 import { IonicStorageModule } from '@ionic/storage';
 
 import { ConferenceApp } from './app.component';
@@ -25,9 +27,14 @@ import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
 import { TabsPage } from '../pages/tabs-page/tabs-page';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SupportPage } from '../pages/support/support';
+import { ExhibitorListPage } from '../pages/exhibitor-list/exhibitor-list';
+import { ExhibitorDetailPage } from '../pages/exhibitor-detail/exhibitor-detail';
+
+import { QrscannerPage } from '../pages/qrscanner/qrscanner';
 
 import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
+import { ExhibitorData } from '../providers/exhibitor-data';
 
 
 @NgModule({
@@ -46,7 +53,10 @@ import { UserData } from '../providers/user-data';
     SpeakerListPage,
     TabsPage,
     TutorialPage,
-    SupportPage
+    SupportPage,
+    ExhibitorListPage,
+    ExhibitorDetailPage,
+    QrscannerPage
   ],
   imports: [
     BrowserModule,
@@ -65,7 +75,10 @@ import { UserData } from '../providers/user-data';
         { component: SupportPage, name: 'SupportPage', segment: 'support' },
         { component: LoginPage, name: 'LoginPage', segment: 'login' },
         { component: AccountPage, name: 'AccountPage', segment: 'account' },
-        { component: SignupPage, name: 'SignupPage', segment: 'signup' }
+        { component: SignupPage, name: 'SignupPage', segment: 'signup' },
+        { component: ExhibitorListPage, name: 'ExhibitorList', segment: 'exhibitorList' },
+        { component: ExhibitorDetailPage, name: 'ExhibitorDetail', segment: 'exhibitorDetail' },
+        { component: QrscannerPage, name: 'ScannerPage', segment: 'qrScanner' }
       ]
     }),
     IonicStorageModule.forRoot()
@@ -86,14 +99,19 @@ import { UserData } from '../providers/user-data';
     SpeakerListPage,
     TabsPage,
     TutorialPage,
-    SupportPage
+    SupportPage,
+    ExhibitorListPage,
+    ExhibitorDetailPage,
+    QrscannerPage
   ],
   providers: [
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ConferenceData,
+    ExhibitorData,
     UserData,
     InAppBrowser,
-    SplashScreen
+    SplashScreen,
+    BarcodeScanner
   ]
 })
 export class AppModule { }

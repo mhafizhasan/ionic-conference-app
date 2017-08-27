@@ -25,6 +25,7 @@ export class SchedulePage {
   // with the variable #scheduleList, `read: List` tells it to return
   // the List and not a reference to the element
   @ViewChild('scheduleList', { read: List }) scheduleList: List;
+  // @ViewChild('scheduleListDay2', { read: List }) scheduleListDay2: List;
 
   dayIndex = 0;
   queryText = '';
@@ -47,12 +48,20 @@ export class SchedulePage {
 
   ionViewDidLoad() {
     this.app.setTitle('Schedule');
-    this.updateSchedule();
+    this.updateSchedule(); 
   }
 
   updateSchedule() {
+    
+    if(this.segment === 'day2') {
+      this.dayIndex = 1;
+    } else {
+      this.dayIndex = 0;
+    }
+
     // Close any open sliding items when the schedule updates
     this.scheduleList && this.scheduleList.closeSlidingItems();
+    // this.scheduleListDay2 && this.scheduleListDay2.closeSlidingItems();
 
     this.confData.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment).subscribe((data: any) => {
       this.shownSessions = data.shownSessions;
@@ -77,7 +86,9 @@ export class SchedulePage {
     // go to the session detail page
     // and pass in the session data
 
-    this.navCtrl.push(SessionDetailPage, { sessionId: sessionData.id, name: sessionData.name });
+    console.log(this.dayIndex);
+    
+    this.navCtrl.push(SessionDetailPage, { sessionId: sessionData.id, day: this.dayIndex });
   }
 
   addFavorite(slidingItem: ItemSliding, sessionData: any) {

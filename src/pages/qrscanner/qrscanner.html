@@ -1,0 +1,17 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>PSCC Scanner</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <button ion-button (click)="scan()">Scan ... </button>
+    <div *ngIf="scanData">
+        <p>Scanned Text : {{scanData.text}}</p>
+        <p>Scanned Format : {{scanData.format}}</p>
+
+    </div>
+</ion-content>

@@ -4,7 +4,7 @@ import { IonicPage, NavParams } from 'ionic-angular';
 import { ConferenceData } from '../../providers/conference-data';
 
 @IonicPage({
-  segment: 'session/:sessionId'
+  segment: 'session/:sessionId/day/:day'
 })
 @Component({
   selector: 'page-session-detail',
@@ -12,6 +12,7 @@ import { ConferenceData } from '../../providers/conference-data';
 })
 export class SessionDetailPage {
   session: any;
+  dayIndex: 0;
 
   constructor(
     public dataProvider: ConferenceData,
@@ -20,13 +21,16 @@ export class SessionDetailPage {
 
   ionViewWillEnter() {
     this.dataProvider.load().subscribe((data: any) => {
+      
+      this.dayIndex = this.navParams.data.day;
+      
       if (
         data &&
         data.schedule &&
-        data.schedule[0] &&
-        data.schedule[0].groups
+        data.schedule[this.dayIndex] &&
+        data.schedule[this.dayIndex].groups
       ) {
-        for (const group of data.schedule[0].groups) {
+        for (const group of data.schedule[this.dayIndex].groups) {
           if (group && group.sessions) {
             for (const session of group.sessions) {
               if (session && session.id === this.navParams.data.sessionId) {

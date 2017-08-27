@@ -1,0 +1,17 @@
+{
+
+  "exhibitors": [{
+    "name": "SYARIKAT MAMPU",
+    "image": "assets/img/speakers/bear.jpg",
+    "booth": "Booth No. 5",
+    "services": "IoT, Citizen Centric Design, Cyber Security",
+    "id": "1"
+  }, {
+    "name": "SYARIKAT TIDAK MAMPU DENGAN NAMA YANG PANJANG",
+    "image": "assets/img/speakers/cheetah.jpg",
+    "booth": "Booth No. 7",
+    "services": "Artificial Intelligence, Data Analytics, Clouds, Blockchain Technology",
+    "id": "2"
+  }]
+
+}
