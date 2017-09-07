@@ -12,6 +12,9 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class ExhibitorData {
   data: any;
+  url = "http://cioconvex.mampu.gov.my";
+  // url = "http://localhost/cioconvex";
+
 
   constructor(public http: Http) { }
 
@@ -19,45 +22,26 @@ export class ExhibitorData {
     if (this.data) {
       return Observable.of(this.data);
     } else {
-      return this.http.get('http://localhost/api.cioconvex/?action=exhibitors')
+      return this.http.get(this.url+'/api.php?action=exhibitors')
         .map(this.processData, this);
     }
   }
 
   processData(data: any) {
-    
     this.data = data.json();
-
     return this.data;
   }
 
 
   getExhibitors() {
-
-    // return this.http.get('assets/data/exhibitor.json').map(res => res.json());
-
     return this.load().map((data: any) => {
-
       return data;
-
     });
 
   }
 
   getExhibitorDetail(exhibitorId: string): any {
-    return this.http.get('http://localhost/api.cioconvex/api.php?action=exhibitor-detail&id='+exhibitorId).map(res => res.json());
+    return this.http.get(this.url+'/api.php?action=exhibitor-detail&id='+exhibitorId).map(res => res.json());
   }
-
-  // getTracks() {
-  //   return this.load().map((data: any) => {
-  //     return data.tracks.sort();
-  //   });
-  // }
-
-  // getMap() {
-  //   return this.load().map((data: any) => {
-  //     return data.map;
-  //   });
-  // }
 
 }

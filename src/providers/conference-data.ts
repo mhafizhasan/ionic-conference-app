@@ -13,7 +13,8 @@ import 'rxjs/add/observable/of';
 export class ConferenceData {
 
   data: any;
-  // venue: any;
+  url = "http://cioconvex.mampu.gov.my";
+  // url = "http://localhost/cioconvex";
 
   constructor(public http: Http, public user: UserData) { }
 
@@ -21,7 +22,7 @@ export class ConferenceData {
     if (this.data) {
       return Observable.of(this.data);
     } else {
-      return this.http.get('http://localhost/cioconvex/api.php?action=schedules')
+      return this.http.get(this.url+'/api.php?action=schedules')
         .map(this.processData, this);
     }
   }
@@ -35,12 +36,17 @@ export class ConferenceData {
 
   // Get List of Speakers
   getSpeakers() {
-    return this.http.get('http://localhost/cioconvex/api.php?action=speakers').map(res => res.json());
+    return this.http.get(this.url+'/api.php?action=speakers').map(res => res.json());
+  }
+
+  // Get Speaker Details
+  getSpeakerDetail(speakerId: string): any {
+    return this.http.get(this.url+'/api.php?action=speaker-detail&id='+speakerId).map(res => res.json());
   }
 
   // Get Session Details
   getSessionDetail(sessionId: string): any {
-    return this.http.get('http://localhost/cioconvex/api.php?action=session-detail&id='+sessionId).map(res => res.json());
+    return this.http.get(this.url+'/api.php?action=session-detail&id='+sessionId).map(res => res.json());
   }
 
   // Get Timeline for Agendas

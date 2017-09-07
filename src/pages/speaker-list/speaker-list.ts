@@ -12,7 +12,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { ConferenceData } from '../../providers/conference-data';
 
-import { SessionDetailPage } from '../session-detail/session-detail';
+// import { SessionDetailPage } from '../session-detail/session-detail';
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 
 // TODO remove
@@ -42,26 +42,24 @@ export class SpeakerListPage {
 
   ionViewDidLoad() {
     this.confData.getSpeakers().subscribe((speakers: any[]) => {
-      console.log(speakers);
-      
       this.speakers = speakers;
     });
   }
 
-  goToSessionDetail(session: any) {
-    this.navCtrl.push(SessionDetailPage, { sessionId: session.id });
-  }
+  // goToSessionDetail(session: any) {
+  //   this.navCtrl.push(SessionDetailPage, { sessionId: session.id });
+  // }
 
   goToSpeakerDetail(speaker: any) {
     this.navCtrl.push(SpeakerDetailPage, { speakerId: speaker.id });
   }
 
-  goToSpeakerTwitter(speaker: any) {
-    this.inAppBrowser.create(
-      `https://twitter.com/${speaker.twitter}`,
-      '_blank'
-    );
-  }
+  // goToSpeakerTwitter(speaker: any) {
+  //   this.inAppBrowser.create(
+  //     `https://twitter.com/${speaker.twitter}`,
+  //     '_blank'
+  //   );
+  // }
 
   openSpeakerShare(speaker: any) {
     let actionSheet = this.actionSheetCtrl.create({

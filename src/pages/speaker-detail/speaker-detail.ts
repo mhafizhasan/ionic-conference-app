@@ -17,16 +17,24 @@ export class SpeakerDetailPage {
   }
 
   ionViewWillEnter() {
-    this.dataProvider.load().subscribe((data: any) => {
-      if (data && data.speakers) {
-        for (const speaker of data.speakers) {
-          if (speaker && speaker.id === this.navParams.data.speakerId) {
-            this.speaker = speaker;
-            break;
-          }
-        }
-      }
+
+    console.log(this.navParams.data.speakerId);
+    
+
+    this.dataProvider.getSpeakerDetail(this.navParams.data.speakerId).subscribe((data: any) => { 
+      this.speaker = data.data;    
     });
+
+    // this.dataProvider.load().subscribe((data: any) => {
+    //   if (data && data.speakers) {
+    //     for (const speaker of data.speakers) {
+    //       if (speaker && speaker.id === this.navParams.data.speakerId) {
+    //         this.speaker = speaker;
+    //         break;
+    //       }
+    //     }
+    //   }
+    // });
 
   }
 

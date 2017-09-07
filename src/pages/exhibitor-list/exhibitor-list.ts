@@ -26,6 +26,7 @@ export class ExhibitorListPage {
 
   ionViewDidLoad() {
     this.exhibitorData.getExhibitors().subscribe((exhibitors: any[]) => {
+      console.log(exhibitors);
       this.exhibitors = exhibitors;
     });
   }

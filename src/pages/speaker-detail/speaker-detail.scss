@@ -1,9 +1,18 @@
 
 .speaker-detail img {
-  max-width: 140px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
 }
 
 .speaker-detail p {
   color: #60646B;
+}
+
+.line-breaker {
+  margin-left:40%;
+  margin-right:40%;
+  margin-top:10px;
+  padding-top:2px;
+  background-color: #488aff !important;
 }

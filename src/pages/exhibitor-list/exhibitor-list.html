@@ -7,96 +7,29 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="card-background-page speaker-list">
-
+<ion-content class="outer-content speaker-list">
     <ion-list [virtualScroll]="exhibitors">
-
-        <ion-grid fixed>
-            <ion-row align-items-stretch>
-              <ion-col col-12 col-md-6 align-self-stretch align-self-center *virtualItem="let exhibitor" approxItemHeight="457px">
-
-                  <ion-card class="exhibitor-card" (click)="goToExhibitorDetail(exhibitor)">
-                      <img [src]="exhibitor.image"/>
-                      <div class="card-text">
-                        <h1 class="card-title">{{exhibitor.company}}</h1>
-                        <p class="card-subtitle">{{exhibitor.booth}}</p>
-                        <p class="card-subtitle">{{exhibitor.services}}</p>
-                      </div>
-                    </ion-card>
-
-              </ion-col>
-            </ion-row>
-        </ion-grid>
-
+      <ion-grid fixed>
+        <ion-row align-items-stretch>
+  
+          <ion-col col-12 col-md-6 align-self-stretch align-self-center *virtualItem="let exhibitor" approxItemHeight="457px">
+  
+            <ion-card class="speaker-card">
+              <ion-card-header>
+                <button ion-item detail-none (click)="goToExhibitorDetail(exhibitor)" text-wrap>
+                  <!-- <ion-avatar item-start>
+                    <img style="height:50px;width:50px;" src="http://cioconvex.mampu.gov.my/media/{{speaker.image}}" alt="Speaker profile pic">
+                  </ion-avatar> -->
+                  {{exhibitor.exhibitor}}<br>
+                  <span style="font-size:12px;color:#454444">{{exhibitor.product}}</span><br>
+                  <ion-badge class="cat-{{exhibitor.cat}}">{{exhibitor.cat_name}}</ion-badge>
+                </button>
+              </ion-card-header>
+  
+            </ion-card>
+  
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-list>
-    
-      
-    
-    </ion-content>
-
-<!-- <ion-content class="outer-content speaker-list">
-  <ion-list [virtualScroll]="exhibitors">
-    <ion-grid fixed>
-      <ion-row align-items-stretch>
-
-        <ion-col col-12 col-md-6 align-self-stretch align-self-center *virtualItem="let exhibitor" approxItemHeight="457px">
-
-          <ion-card class="exhibitor-card">
-            <img [src]="exhibitor.profilePic" alt="Company Profile Pic">
-            <ion-card-content>
-              <ion-card-title>
-                {{exhibitor.name}}
-              </ion-card-title>
-            </ion-card-content>
-          </ion-card> -->
-
-          <!-- <ion-card class="speaker-card">
-            <ion-card-header>
-              <button ion-item detail-none (click)="goToSpeakerDetail(speaker)">
-                <ion-avatar item-start>
-                  <img [src]="speaker.profilePic" alt="Speaker profile pic">
-                </ion-avatar>
-                {{speaker.name}}
-              </button>
-            </ion-card-header>
-
-            <ion-card-content class="outer-content">
-              <ion-list>
-                <button ion-item *ngFor="let session of speaker.sessions" (click)="goToSessionDetail(session)">
-                  <h3>{{session.name}}</h3>
-                </button>
-
-                <button ion-item (click)="goToSpeakerDetail(speaker)">
-                  <h3>About {{speaker.name}}</h3>
-                </button>
-              </ion-list>
-            </ion-card-content>
-
-            <ion-row no-padding>
-              <ion-col col-12 col-lg-auto text-center text-lg-left>
-                <button ion-button clear small color="primary" icon-start (click)="goToSpeakerTwitter(speaker)">
-                  <ion-icon name="logo-twitter"></ion-icon>
-                  Tweet
-                </button>
-              </ion-col>
-              <ion-col col-12 col-lg-auto text-center>
-                <button ion-button clear small color="primary" icon-start (click)="openSpeakerShare(speaker)">
-                  <ion-icon name='share-alt'></ion-icon>
-                  Share
-                </button>
-              </ion-col>
-              <ion-col col-12 col-lg-auto text-center text-lg-right>
-                <button ion-button clear small color="primary" icon-start (click)="openContact(speaker)">
-                  <ion-icon name='chatboxes'></ion-icon>
-                  Contact
-                </button>
-              </ion-col>
-            </ion-row>
-
-          </ion-card> -->
-
-        <!-- </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-list>
-</ion-content> -->
+  </ion-content>

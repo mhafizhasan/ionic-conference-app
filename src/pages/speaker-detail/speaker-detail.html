@@ -1,14 +1,14 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{speaker?.name}}</ion-title>
+    <ion-title *ngIf="speaker">{{speaker?.fullname}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding class="speaker-detail">
   <div text-center *ngIf="speaker">
-    <img [src]="speaker.profilePic" [alt]="speaker.name"><br>
+    <img src="http://cioconvex.mampu.gov.my/media/{{speaker.image}}" alt="{{speaker.fullname}}"><br>
 
-    <button ion-button icon-only clear small color="twitter">
+    <!-- <button ion-button icon-only clear small color="twitter">
       <ion-icon name="logo-twitter"></ion-icon>
     </button>
     <button ion-button icon-only clear small color="github">
@@ -16,8 +16,13 @@
     </button>
     <button ion-button icon-only clear small color="instagram">
       <ion-icon name="logo-instagram"></ion-icon>
-    </button>
+    </button> -->
+
+    <h3>{{speaker?.fullname}}</h3>
+    <span style="font-size:10px;color:#454444">{{speaker.designation}}</span>
+    <hr class="line-breaker">
+    <p [innerHtml]="speaker?.description"></p>
   </div>
 
-  <p>{{speaker?.about}}</p>
+  
 </ion-content>
