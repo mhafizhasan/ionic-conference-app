@@ -19,7 +19,7 @@ export class ExhibitorData {
     if (this.data) {
       return Observable.of(this.data);
     } else {
-      return this.http.get('http://localhost/api.cioconvex/api.php?action=exhibitors')
+      return this.http.get('http://localhost/api.cioconvex/?action=exhibitors')
         .map(this.processData, this);
     }
   }
@@ -38,7 +38,7 @@ export class ExhibitorData {
 
     return this.load().map((data: any) => {
 
-      return data.exhibitors;
+      return data;
 
     });
 

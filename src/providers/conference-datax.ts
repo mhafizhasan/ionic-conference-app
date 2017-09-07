@@ -11,9 +11,7 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class ConferenceData {
-
   data: any;
-  // venue: any;
 
   constructor(public http: Http, public user: UserData) { }
 
@@ -21,7 +19,7 @@ export class ConferenceData {
     if (this.data) {
       return Observable.of(this.data);
     } else {
-      return this.http.get('http://localhost/cioconvex/api.php?action=schedules')
+      return this.http.get('http://localhost/api.cioconvex/?action=schedules')
         .map(this.processData, this);
     }
   }
@@ -30,46 +28,68 @@ export class ConferenceData {
     // just some good 'ol JS fun with objects and arrays
     // build up the data by linking speakers to sessions
     this.data = data.json();
+
+    this.data.tracks = [];
+
+    // loop through each day in the schedule
+    this.data.schedule.forEach((day: any) => {
+      // console.log(day.date);
+      
+      // loop through each timeline group in the day
+      day.groups.forEach((group: any) => {
+        // loop through each session in the timeline group
+        group.sessions.forEach((session: any) => {
+          session.speakers = [];
+          if (session.speakerNames) {
+            session.speakerNames.forEach((speakerName: any) => {
+              let speaker = this.data.speakers.find((s: any) => s.name === speakerName);
+              if (speaker) {
+                session.speakers.push(speaker);
+                speaker.sessions = speaker.sessions || [];
+                speaker.sessions.push(session);
+              }
+            });
+          }
+
+          if (session.tracks) {
+            session.tracks.forEach((track: any) => {
+              if (this.data.tracks.indexOf(track) < 0) {
+                this.data.tracks.push(track);
+              }
+            });
+          }
+        });
+      });
+    });
+
     return this.data;
   }
 
-  // Get List of Speakers
-  getSpeakers() {
-    return this.http.get('http://localhost/cioconvex/api.php?action=speakers').map(res => res.json());
-  }
-
-  // Get Session Details
-  getSessionDetail(sessionId: string): any {
-    return this.http.get('http://localhost/cioconvex/api.php?action=session-detail&id='+sessionId).map(res => res.json());
-  }
-
-  // Get Timeline for Agendas
-  getTimeline(queryText = '') {
+  getTimeline(dayIndex: number, queryText = '', excludeTracks: any[] = [], segment = 'all') {
     return this.load().map((data: any) => {
-
-      let day = data.data;    
-      day.shownSessions = 10;
+      let day = data.schedule[dayIndex];
+      day.shownSessions = 0;
 
       queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
       let queryWords = queryText.split(' ').filter(w => !!w.trim().length);
-      console.log('queryWords: '+queryWords);
 
-      day.day1 = [];
-      day.day2 = [];
-  
-      // loop to seperate by day
-      day.forEach((d: any) => {
-        
-        if(d.event_date == "05 Oct 2017") {
-            day.day1.push(d);
-        } else {
-            day.day2.push(d);
-        }
-  
+      day.groups.forEach((group: any) => {
+        group.hide = true;
+
+        group.sessions.forEach((session: any) => {
+          // check if this session should show or not
+          this.filterSession(session, queryWords, excludeTracks, segment);
+
+          if (!session.hide) {
+            // if this session is not hidden then this group should show
+            group.hide = false;
+            day.shownSessions++;
+          }
+        });
+
       });
 
       return day;
-
     });
   }
 
@@ -112,15 +132,15 @@ export class ConferenceData {
     session.hide = !(matchesQueryText && matchesTracks && matchesSegment);
   }
 
-  // getSpeakers() {
-  //   return this.load().map((data: any) => {
-  //     return data.speakers.sort((a: any, b: any) => {
-  //       let aName = a.name.split(' ').pop();
-  //       let bName = b.name.split(' ').pop();
-  //       return aName.localeCompare(bName);
-  //     });
-  //   });
-  // }
+  getSpeakers() {
+    return this.load().map((data: any) => {
+      return data.speakers.sort((a: any, b: any) => {
+        let aName = a.name.split(' ').pop();
+        let bName = b.name.split(' ').pop();
+        return aName.localeCompare(bName);
+      });
+    });
+  }
 
   getTracks() {
     return this.load().map((data: any) => {
@@ -128,22 +148,10 @@ export class ConferenceData {
     });
   }
 
-  // getMap() {
-  //   // return this.load().map((data: any) => {
-  //   //   return data.map;
-  //   // });
-
-  //   venue: Object = {};
-  //   this.venue.name = "Kompleks Perbadanan Putrajaya";
-  //   this.venue.lat = 2.9177944;
-  //   this.venue.lng = 101.6822463;
-  //   this.venue.center = true;
-
-  //   console.log(this.venue);
-    
-
-  //   return this.venue;
-    
-  // }
+  getMap() {
+    return this.load().map((data: any) => {
+      return data.map;
+    });
+  }
 
 }

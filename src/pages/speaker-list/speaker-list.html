@@ -16,22 +16,19 @@
 
           <ion-card class="speaker-card">
             <ion-card-header>
-              <button ion-item detail-none (click)="goToSpeakerDetail(speaker)">
+              <button ion-item detail-none (click)="goToSpeakerDetail(speaker)" text-wrap>
                 <ion-avatar item-start>
-                  <img [src]="speaker.profilePic" alt="Speaker profile pic">
+                  <img style="height:50px;width:50px;" src="http://cioconvex.mampu.gov.my/media/{{speaker.image}}" alt="Speaker profile pic">
                 </ion-avatar>
-                {{speaker.name}}
+                {{speaker.fullname}}<br>
+                <span style="font-size:12px;color:#454444">{{speaker.designation}}</span>
               </button>
             </ion-card-header>
 
-            <ion-card-content class="outer-content">
+            <!-- <ion-card-content class="outer-content">
               <ion-list>
-                <button ion-item *ngFor="let session of speaker.sessions" (click)="goToSessionDetail(session)">
-                  <h3>{{session.name}}</h3>
-                </button>
-
-                <button ion-item (click)="goToSpeakerDetail(speaker)">
-                  <h3>About {{speaker.name}}</h3>
+                <button ion-item (click)="goToSpeakerDetail(speaker)" text-wrap>
+                  <h3>{{speaker.description}}</h3>
                 </button>
               </ion-list>
             </ion-card-content>
@@ -55,7 +52,7 @@
                   Contact
                 </button>
               </ion-col>
-            </ion-row>
+            </ion-row> -->
 
           </ion-card>
 

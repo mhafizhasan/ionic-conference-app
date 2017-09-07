@@ -19,7 +19,17 @@ page-schedule {
   @each $track, $value in auxiliary-categories() {
    ion-item-sliding[track=#{$track}] ion-label {
      border-left: 2px solid $value;
+    //  border-bottom: 1px solid #dedede;
      padding-left: 10px;
    }
   }
+}
+
+.ico-time {
+  padding-right: 5px;
+}
+
+.ico-calendar {
+  padding-left: 15px;
+  padding-right: 5px;
 }

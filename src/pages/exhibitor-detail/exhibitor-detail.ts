@@ -19,6 +19,9 @@ export class ExhibitorDetailPage {
   ) {}
 
   ionViewWillEnter() {
+
+    console.log(this.navParams.data);
+    
     
     this.exhibitor = this.navParams.data.exhibitor;
 

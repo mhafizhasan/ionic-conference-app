@@ -5,22 +5,23 @@
     </button>
 
     <ion-segment [(ngModel)]="segment" (ionChange)="updateSchedule()">
-      <ion-segment-button value="all">
+      <ion-segment-button value="day1">
         Day 1
       </ion-segment-button>
       <ion-segment-button value="day2">
         Day 2
       </ion-segment-button>
-      <ion-segment-button value="favorites">
+      <!-- <ion-segment-button value="favorites">
         Favorites
-      </ion-segment-button>
+      </ion-segment-button> -->
     </ion-segment>
 
-    <ion-buttons end>
+    <!-- <ion-buttons end>
       <button ion-button icon-only (click)="presentFilter()">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
+    
   </ion-navbar>
 
   <ion-toolbar no-border-top>
@@ -38,35 +39,26 @@
   </ion-refresher>
 
   <!-- Day 1 -->
-  <ion-list #scheduleList [hidden]="shownSessions === 0 || segment === 'day2'">
+  <ion-list #scheduleList [hidden]="day1.hide">
 
-    <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
+    <ion-item-group *ngFor="let d1 of day1">
 
       <ion-item-divider sticky>
         <ion-label>
-          {{group.time}}
+          <ion-icon class="ico-time" name="time"></ion-icon>{{d1.event_time}}<ion-icon class="ico-calendar" name="calendar"></ion-icon>{{d1.event_date}}
         </ion-label>
       </ion-item-divider>
 
-      <ion-item-sliding *ngFor="let session of group.sessions" #slidingItem [attr.track]="session.tracks[0] | lowercase" [hidden]="session.hide">
-
-        <button ion-item (click)="goToSessionDetail(session)">
-          <h3>{{session.name}}</h3>
-          <p>
-            {{session.timeStart}} &mdash;
-            {{session.timeEnd}}:
-            {{session.location}}
-          </p>
-        </button>
-
-        <ion-item-options>
-          <button ion-button color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
-            Favorite
+      <ion-item-sliding #slidingItem [attr.track]="category">
+      <!-- <ion-item-sliding style="padding-left:10px;"> -->
+          
+          <button ion-item (click)="goToSessionDetail(d1)" style="border-bottom:1px solid #dedede;" text-wrap>
+            <h3>&nbsp;{{d1.ciosession_name}}</h3>
+            <!-- <p>
+              {{d1.start_time}}
+            </p> -->
+            <p>{{d1.event_desc}}</p>
           </button>
-          <button ion-button color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
-            Remove
-          </button>
-        </ion-item-options>
 
       </ion-item-sliding>
 
@@ -75,41 +67,31 @@
   </ion-list>
 
   <!-- Day 2 -->
-  <ion-list #scheduleList [hidden]="shownSessions === 0 || segment === 'all'">
-    
-        <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
-    
-          <ion-item-divider sticky>
-            <ion-label>
-              {{group.time}}
-            </ion-label>
-          </ion-item-divider>
-    
-          <ion-item-sliding *ngFor="let session of group.sessions" #slidingItem [attr.track]="session.tracks[0] | lowercase" [hidden]="session.hide">
-    
-            <button ion-item (click)="goToSessionDetail(session)">
-              <h3>{{session.name}}</h3>
-              <p>
-                {{session.timeStart}} &mdash;
-                {{session.timeEnd}}:
-                {{session.location}}
-              </p>
+  <ion-list #scheduleList [hidden]="day2.hide">
+
+      <ion-item-group *ngFor="let d2 of day2">
+          
+        <ion-item-divider sticky>
+          <ion-label>
+              <ion-icon class="ico-time" name="time"></ion-icon>{{d2.event_time}}<ion-icon class="ico-calendar" name="calendar"></ion-icon>{{d2.event_date}}
+          </ion-label>
+        </ion-item-divider>
+  
+        <ion-item-sliding #slidingItem [attr.track]="category">
+  
+            <button ion-item (click)="goToSessionDetail(d2)" style="border-bottom:1px solid #dedede;" text-wrap>
+              <h3>{{d2.ciosession_name}}</h3>
+              <!-- <p>
+                {{d2.start_time}}
+              </p> -->
+              <p [innerHTML]="d2.event_desc"></p>
             </button>
-    
-            <ion-item-options>
-              <button ion-button color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'day2'">
-                Favorite
-              </button>
-              <button ion-button color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
-                Remove
-              </button>
-            </ion-item-options>
-    
-          </ion-item-sliding>
+
+        </ion-item-sliding>
     
         </ion-item-group>
     
-      </ion-list>
+  </ion-list>
 
   <ion-list-header [hidden]="shownSessions > 0">
       No Sessions Found

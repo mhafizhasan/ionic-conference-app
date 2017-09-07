@@ -1,11 +1,11 @@
 {
-    "name": "ionic-conference-app",
+    "name": "cio-convex-2017",
     "version": "0.0.0",
-    "description": "Ionic Conference App",
+    "description": "CIO CONVEX 2017",
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ionic-team/ionic-conference-app.git"
+        "url": "https://git.osdec.gov.my/cio-convex-app.git"
     },
     "scripts": {
         "build": "ionic-app-scripts build",
@@ -31,7 +31,7 @@
         "@ionic-native/status-bar": "3.13.1",
         "@ionic/storage": "2.0.1",
         "cordova-android": "^6.2.3",
-        "cordova-ios": "4.3.1",
+        "cordova-ios": "^4.4.0",
         "cordova-plugin-compat": "^1.1.0",
         "cordova-plugin-console": "^1.0.5",
         "cordova-plugin-crosswalk-webview": "^2.2.0",

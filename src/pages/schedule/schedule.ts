@@ -29,11 +29,14 @@ export class SchedulePage {
 
   dayIndex = 0;
   queryText = '';
-  segment = 'all';
+  segment = 'day1';
   excludeTracks: any = [];
   shownSessions: any = [];
   groups: any = [];
   confDate: string;
+  day1: any = [];
+  day2: any = [];
+  category = 'ionic';
 
   constructor(
     public alertCtrl: AlertController,
@@ -60,13 +63,30 @@ export class SchedulePage {
     }
 
     // Close any open sliding items when the schedule updates
-    this.scheduleList && this.scheduleList.closeSlidingItems();
+    // this.scheduleList && this.scheduleList.closeSlidingItems();
     // this.scheduleListDay2 && this.scheduleListDay2.closeSlidingItems();
 
-    this.confData.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment).subscribe((data: any) => {
+    this.confData.getTimeline(this.queryText).subscribe((data: any) => {
+      
+      // console.log(data);
+
       this.shownSessions = data.shownSessions;
-      this.groups = data.groups;
+      // this.groups = data.data;
+      this.day1 = data.day1;
+      this.day2 = data.day2;
+
+      if(this.segment == "day1") {
+        this.day2.hide = true;
+        this.day1.hide = false;
+      }
+
+      if(this.segment == "day2") {
+        this.day2.hide = false;
+        this.day1.hide = true;
+      }
+
     });
+
   }
 
   presentFilter() {
@@ -86,9 +106,7 @@ export class SchedulePage {
     // go to the session detail page
     // and pass in the session data
 
-    console.log(this.dayIndex);
-    
-    this.navCtrl.push(SessionDetailPage, { sessionId: sessionData.id, day: this.dayIndex });
+    this.navCtrl.push(SessionDetailPage, { sessionId: sessionData.ciosession_id});
   }
 
   addFavorite(slidingItem: ItemSliding, sessionData: any) {
@@ -160,7 +178,7 @@ export class SchedulePage {
   }
 
   doRefresh(refresher: Refresher) {
-    this.confData.getTimeline(this.dayIndex, this.queryText, this.excludeTracks, this.segment).subscribe((data: any) => {
+    this.confData.getTimeline(this.queryText).subscribe((data: any) => {
       this.shownSessions = data.shownSessions;
       this.groups = data.groups;
 
