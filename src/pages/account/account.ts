@@ -10,14 +10,17 @@ import { UserData } from '../../providers/user-data';
   templateUrl: 'account.html'
 })
 export class AccountPage {
+
   username: string;
+  profile: any;
 
   constructor(public alertCtrl: AlertController, public nav: NavController, public userData: UserData) {
 
   }
 
   ngAfterViewInit() {
-    this.getUsername();
+    // this.getUsername();
+    this.getUserProfile();
   }
 
   updatePicture() {
@@ -43,16 +46,24 @@ export class AccountPage {
       text: 'Ok',
       handler: (data: any) => {
         this.userData.setUsername(data.username);
-        this.getUsername();
+        // this.getUsername();
       }
     });
 
     alert.present();
   }
 
-  getUsername() {
-    this.userData.getUsername().then((username) => {
-      this.username = username;
+  // getUsername() {
+  //   this.userData.getUsername().then((username) => {
+  //     this.username = username;
+  //   });
+  // }
+
+  getUserProfile() {
+    this.userData.getUserProfile().then((profile) => {
+      this.profile = profile.data;
+      console.log('get user profile');
+      console.log(this.profile);
     });
   }
 

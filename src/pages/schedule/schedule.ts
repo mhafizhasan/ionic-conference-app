@@ -56,11 +56,11 @@ export class SchedulePage {
 
   updateSchedule() {
     
-    if(this.segment === 'day2') {
-      this.dayIndex = 1;
-    } else {
-      this.dayIndex = 0;
-    }
+    // if(this.segment === 'day2') {
+    //   this.dayIndex = 1;
+    // } else {
+    //   this.dayIndex = 0;
+    // }
 
     // Close any open sliding items when the schedule updates
     // this.scheduleList && this.scheduleList.closeSlidingItems();

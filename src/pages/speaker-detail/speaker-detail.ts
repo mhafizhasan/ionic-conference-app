@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { Storage } from '@ionic/storage';
+
 import { ConferenceData } from '../../providers/conference-data';
+
+import { UserData } from '../../providers/user-data';
 
 @IonicPage({
   segment: 'speaker/:speakerId'
@@ -12,33 +16,42 @@ import { ConferenceData } from '../../providers/conference-data';
 })
 export class SpeakerDetailPage {
   speaker: any;
+  logged: boolean;
+  rated: boolean;
+  // userData = UserData;
 
-  constructor(public dataProvider: ConferenceData, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public dataProvider: ConferenceData, 
+    public userData: UserData,
+    public storage: Storage,
+    public navCtrl: NavController, 
+    public navParams: NavParams) {
   }
 
   ionViewWillEnter() {
-
-    console.log(this.navParams.data.speakerId);
-    
 
     this.dataProvider.getSpeakerDetail(this.navParams.data.speakerId).subscribe((data: any) => { 
       this.speaker = data.data;    
     });
 
-    // this.dataProvider.load().subscribe((data: any) => {
-    //   if (data && data.speakers) {
-    //     for (const speaker of data.speakers) {
-    //       if (speaker && speaker.id === this.navParams.data.speakerId) {
-    //         this.speaker = speaker;
-    //         break;
-    //       }
-    //     }
-    //   }
-    // });
+    this.userData.hasLoggedIn().then((hasLoggedIn) => {
+      this.logged = hasLoggedIn;
+    });
+
+    this.storage.get('speaker_'+this.navParams.data.speakerId).then((data) => {
+      this.rated = data;
+    });
 
   }
 
   goToSessionDetail(session: any) {
     this.navCtrl.push('SessionDetailPage', { sessionId: session.id });
   }
+
+  onModelChange(e: any, speaker: number) {
+    // console.log(e);
+    this.userData.rateSpeaker(e, speaker);
+    this.rated = true;
+  }
+
 }

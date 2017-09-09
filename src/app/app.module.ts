@@ -36,6 +36,8 @@ import { ConferenceData } from '../providers/conference-data';
 import { UserData } from '../providers/user-data';
 import { ExhibitorData } from '../providers/exhibitor-data';
 
+// Import ionic2-rating module
+import { Ionic2RatingModule } from 'ionic2-rating';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,7 @@ import { ExhibitorData } from '../providers/exhibitor-data';
         { component: QrscannerPage, name: 'ScannerPage', segment: 'qrScanner' }
       ]
     }),
+    Ionic2RatingModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],

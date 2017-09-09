@@ -61,7 +61,7 @@ export class ConferenceApp {
     { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' },
     // { title: 'Support', name: 'SupportPage', component: SupportPage, icon: 'help' },
     // { title: 'Signup', name: 'SignupPage', component: SignupPage, icon: 'person-add' },
-    { title: 'Scanner', name: 'ScannerPage', component: QrscannerPage, icon: 'qr-scanner' }
+    // { title: 'Scanner', name: 'ScannerPage', component: QrscannerPage, icon: 'qr-scanner' }
   ];
   rootPage: any;
 
@@ -133,11 +133,17 @@ export class ConferenceApp {
   listenToLoginEvents() {
     this.events.subscribe('user:login', () => {
       this.enableMenu(true);
+
+      this.storage.get('userProfile').then((profile) => {
+        console.log(profile);
+        
+      });
+
     });
 
-    this.events.subscribe('user:signup', () => {
-      this.enableMenu(true);
-    });
+    // this.events.subscribe('user:signup', () => {
+    //   this.enableMenu(true);
+    // });
 
     this.events.subscribe('user:logout', () => {
       this.enableMenu(false);

@@ -7,7 +7,7 @@ import { UserData } from '../../providers/user-data';
 
 import { UserOptions } from '../../interfaces/user-options';
 
-// import { TabsPage } from '../tabs-page/tabs-page';
+import { TabsPage } from '../tabs-page/tabs-page';
 // import { SignupPage } from '../signup/signup';
 
 
@@ -27,9 +27,9 @@ export class LoginPage {
 
     if (form.valid) {
       this.userData.login(this.login.username);
-      // this.navCtrl.push(TabsPage);
+      // console.log('login page');
+      this.navCtrl.push(TabsPage);
     }
-
   }
 
   // onSignup() {

@@ -13,8 +13,9 @@ import 'rxjs/add/observable/of';
 export class ConferenceData {
 
   data: any;
-  url = "http://cioconvex.mampu.gov.my";
+  // url = "http://cioconvex.mampu.gov.my";
   // url = "http://localhost/cioconvex";
+  url = "http://192.168.0.222/cioconvex";
 
   constructor(public http: Http, public user: UserData) { }
 
@@ -51,6 +52,7 @@ export class ConferenceData {
 
   // Get Timeline for Agendas
   getTimeline(queryText = '') {
+
     return this.load().map((data: any) => {
 
       let day = data.data;    
@@ -58,19 +60,40 @@ export class ConferenceData {
 
       queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
       let queryWords = queryText.split(' ').filter(w => !!w.trim().length);
-      console.log('queryWords: '+queryWords);
+
+      // console.log('queryWords: '+queryWords);
 
       day.day1 = [];
       day.day2 = [];
   
       // loop to seperate by day
       day.forEach((d: any) => {
-        
-        if(d.event_date == "05 Oct 2017") {
-            day.day1.push(d);
+  
+        if(queryWords.length) {
+
+          queryWords.forEach((queryWord: string) => {
+            if (d.ciosession_name.toLowerCase().indexOf(queryWord) > -1) {
+              // matchesQueryText = true;
+              if(d.event_date == "05 Oct 2017") {
+                  day.day1.push(d);
+              } else {
+                  day.day2.push(d);
+              }
+            }
+          });
+          
+      
         } else {
-            day.day2.push(d);
+
+          if(d.event_date == "05 Oct 2017") {
+              day.day1.push(d);
+          } else {
+              day.day2.push(d);
+          }
+
         }
+        
+        
   
       });
 
@@ -118,38 +141,10 @@ export class ConferenceData {
     session.hide = !(matchesQueryText && matchesTracks && matchesSegment);
   }
 
-  // getSpeakers() {
+
+  // getTracks() {
   //   return this.load().map((data: any) => {
-  //     return data.speakers.sort((a: any, b: any) => {
-  //       let aName = a.name.split(' ').pop();
-  //       let bName = b.name.split(' ').pop();
-  //       return aName.localeCompare(bName);
-  //     });
+  //     return data.tracks.sort();
   //   });
   // }
-
-  getTracks() {
-    return this.load().map((data: any) => {
-      return data.tracks.sort();
-    });
-  }
-
-  // getMap() {
-  //   // return this.load().map((data: any) => {
-  //   //   return data.map;
-  //   // });
-
-  //   venue: Object = {};
-  //   this.venue.name = "Kompleks Perbadanan Putrajaya";
-  //   this.venue.lat = 2.9177944;
-  //   this.venue.lng = 101.6822463;
-  //   this.venue.center = true;
-
-  //   console.log(this.venue);
-    
-
-  //   return this.venue;
-    
-  // }
-
 }

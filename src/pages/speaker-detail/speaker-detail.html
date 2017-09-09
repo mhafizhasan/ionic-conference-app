@@ -22,7 +22,28 @@
     <span style="font-size:10px;color:#454444">{{speaker.designation}}</span>
     <hr class="line-breaker">
     <p [innerHtml]="speaker?.description"></p>
-  </div>
 
+    <div *ngIf="logged">
+
+      <div *ngIf="!rated">
+          <h4 class="rate-label">Speaker Rating</h4>
+          <rating [(ngModel)]="rate" 
+            readOnly="false"
+            max="5"
+            emptyStarIconName="star-outline"
+            halfStarIconName="star-half"
+            starIconName="star"
+            nullable="false"
+            (ngModelChange)="onModelChange($event, speaker.id)">
+          </rating>
+      </div>
+
+      <div *ngIf="rated">
+          <h4 class="rate-label">You have rated this speaker</h4>
+      </div>
+        
+    </div>
+  
+  </div>
   
 </ion-content>
